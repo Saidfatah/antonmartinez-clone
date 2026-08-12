@@ -1,26 +1,57 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --background-primary: #f9f9f9;
+  --text-color-primary: #171716;
+  --text-color-secondary: #aeaa9f;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background-primary: #171716;
+    --text-color-primary: #f9f9f9;
+    --text-color-secondary: #8f8b82;
   }
+}
+
+@theme inline {
+  --color-background-primary: var(--background-primary);
+  --color-text-primary: var(--text-color-primary);
+  --color-text-secondary: var(--text-color-secondary);
+}
+
+@font-face {
+    font-display: swap;
+    font-family: Lausanne;
+    font-style: normal;
+    font-weight: 300;
+    src: url(/fonts/Lausanne-300.ef861c0.woff) format("woff"), url(/fonts/Lausanne-300.3f24cfa.ttf) format("truetype");
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Lausanne', Arial, Helvetica, sans-serif;
 }
+
+
+#main {
+    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
+    left: 0;
+    position: fixed;
+    top: 0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    width: 100vw;
+}
+
+main {
+    background: #f9f9f9;
+    background: var(--background-primary);
+    color: #171716;
+    color: var(--text-color-primary);
+}
+
+
