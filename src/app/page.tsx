@@ -1,16 +1,74 @@
+"use client";
+
+import { useLayoutEffect, useRef, useState } from "react";
 import CustomCursor from "./components/CustomCursor";
-import ProjectLargeHeading from "./components/ProjectLargeHeading";
+import ProjectsHeadingsShowcase from "./components/ProjectsHeadingsShowcase";
+
+const Layout = ({ children }: { children: React.ReactNode }) => {
+  const rootDiv = useRef<HTMLDivElement>(null);
+  const [layoutReady, setLayoutReady] = useState(false);
+
+  useLayoutEffect(() => {
+    if (!rootDiv.current) return;
+
+    const container = rootDiv.current.querySelector(
+      ".container"
+    ) as HTMLElement | null;
+
+    if (!container) return;
+
+    const rect = container.getBoundingClientRect();
+
+    console.log("INITIAL RECT", {
+      left: rect.left,
+      width: rect.width,
+    });
+
+    const margin = rect.left;
+
+    document.documentElement.style.setProperty(
+      "--container-margin",
+      `${margin}px`
+    );
+
+    document.documentElement.style.setProperty(
+      "--container-width",
+      `${rect.width}px`
+    );
+
+    document.documentElement.style.setProperty(
+      "--column",
+      `${(rect.width + margin) / 12}px`
+    );
+
+    // Now that the container has been measured,
+    // allow .row to participate in the layout.
+    setLayoutReady(true);
+  }, []);
+
+  return (
+    <div ref={rootDiv} className="page">
+      {children(layoutReady)}
+    </div>
+  );
+};
 
 export default function Home() {
   return (
-    <div
+    <Layout>
+      {(layoutReady: boolean) => (
+        <main id="main">
+          <CustomCursor />
 
-    >
-      <main id="main" >
-        <CustomCursor />
-        
-        <ProjectLargeHeading label="Project Title" />
-      </main>
-    </div>
+          <div
+            className={`container ${layoutReady ? "row" : ""} flex-end`}
+          >
+            <div className="column-8">
+              <ProjectsHeadingsShowcase />
+            </div>
+          </div>
+        </main>
+      )}
+    </Layout>
   );
 }
