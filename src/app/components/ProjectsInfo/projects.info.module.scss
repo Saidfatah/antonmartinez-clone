@@ -1,0 +1,7 @@
+.root {
+    bottom: var(--container-margin);
+    left: var(--container-margin);
+    pointer-events: none;
+    position: fixed;
+    will-change: transform;
+}
