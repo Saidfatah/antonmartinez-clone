@@ -1,6 +1,8 @@
 
 .root {
   width: fit-content;
+  overflow: hidden;
+  padding-right: 1rem; // to prevent right side from getting clipped by overflow hidden
   font-family: 'Lausanne', Arial, Helvetica, sans-serif;
   font-size: 140px;
   font-weight: 400;
@@ -8,7 +10,7 @@
   margin: 0;
   cursor: pointer;
   line-height: 75%; // this is to make the characters show from teh base of the text
-  overflow: hidden;
+  
 
   -webkit-font-smoothing: antialiased !important;
 
