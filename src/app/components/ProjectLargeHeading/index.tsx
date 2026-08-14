@@ -6,6 +6,7 @@ import { gsap } from "gsap";
 
 type ProjectLargeHeadingProps = {
     label: string;
+    projectId: string;
     hasDecsenders?: boolean;
 };
 
@@ -13,7 +14,7 @@ function easeOutQuint(x: number): number {
 return 1 - Math.pow(1 - x, 5);
 }
 
-function ProjectLargeHeading({ label, hasDecsenders = false }: ProjectLargeHeadingProps) {
+function ProjectLargeHeading({ label,projectId, hasDecsenders = false }: ProjectLargeHeadingProps) {
     const textSpanRef = useRef<HTMLSpanElement>(null);
 
     const handleEnter = () => {
@@ -25,6 +26,13 @@ function ProjectLargeHeading({ label, hasDecsenders = false }: ProjectLargeHeadi
                 },
             })
         );
+        window.dispatchEvent(
+            new CustomEvent("projectinfo:show", {
+                detail: {
+                    projectId: projectId,
+                },
+            })
+        );
     };
 
     const handleLeave = () => {
@@ -33,6 +41,13 @@ function ProjectLargeHeading({ label, hasDecsenders = false }: ProjectLargeHeadi
                 detail: {
                     show: false,
                     pointer: false,
+                },
+            })
+        );
+        window.dispatchEvent(
+            new CustomEvent("projectinfo:hide", {
+                detail: {
+                    projectId: projectId,
                 },
             })
         );
