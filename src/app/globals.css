@@ -2,6 +2,7 @@
   --background-primary: #f9f9f9;
   --text-color-primary: #171716;
   --text-color-secondary: #aeaa9f;
+  --custom-cursor-color:  rgb(249, 249, 249);;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -9,6 +10,7 @@
     --background-primary: #171716;
     --text-color-primary: #f9f9f9;
     --text-color-secondary: #8f8b82;
+    --custom-cursor-color:  var(--text-color-primary);;
   }
 }
 

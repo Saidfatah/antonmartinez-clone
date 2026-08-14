@@ -11,20 +11,13 @@
     width: 80px;
     z-index: 9999998;
     transition: transform 0.4s cubic-bezier(.19,1,.22,1);
- 
 
+    color: var(--custom-cursor-color);
 
     @media (max-width: 970px) {
         display: none;
     };
 
-    html[data-theme="dark"] {
-        color: #f9f9f9;
-    }
-    
-    html[data-theme="light"] {
-        color: #000;
-    }
 }
 
 
