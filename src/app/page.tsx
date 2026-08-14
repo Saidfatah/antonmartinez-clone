@@ -3,8 +3,9 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import CustomCursor from "./components/CustomCursor";
 import ProjectsHeadingsShowcase from "./components/ProjectsHeadingsShowcase";
+import ProjectsInfo from "./components/ProjectsInfo";
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
+const Layout = ({ children }: { children: (layoutReady: boolean) => React.ReactNode }) => {
   const rootDiv = useRef<HTMLDivElement>(null);
   const [layoutReady, setLayoutReady] = useState(false);
 
@@ -67,6 +68,7 @@ export default function Home() {
               <ProjectsHeadingsShowcase />
             </div>
           </div>
+          <ProjectsInfo />
         </main>
       )}
     </Layout>
