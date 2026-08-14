@@ -1,0 +1,34 @@
+.root {
+    overflow: hidden;
+    white-space: nowrap;
+
+    span {
+        display: block;
+        transition: transform 1s cubic-bezier(.53, .11, 0, 1);
+        will-change: transform;
+
+        &:not(.show) {
+            transform: translateY(115%) rotate(-5deg);
+        }
+
+        &:first-child {
+            transition-delay: 0s;
+        }
+        &:nth-child(2) {
+            transition-delay: .05s;
+        }
+        &:nth-child(3) {
+            transition-delay: .1s;
+        }
+        &:nth-child(4) {
+            transition-delay: .15s;
+        }
+        &:nth-child(5) {
+            transition-delay: .2s;
+        }
+    }
+    
+}
+
+
+ 
