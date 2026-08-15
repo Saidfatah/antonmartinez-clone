@@ -82,6 +82,14 @@ main {
 }
 
 
+#scroll-pointer {
+  position: fixed;
+  inset: 0;
+
+  pointer-events: none;
+  z-index: 100;
+}
+
 .container {
   margin-left: auto;
   margin-right: auto;
