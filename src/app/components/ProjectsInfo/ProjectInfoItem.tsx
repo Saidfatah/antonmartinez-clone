@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import MaskedText from "../MaskedText"
 import styles from "./project.info.item.module.scss"
+import { CustomEventsMap, CustomEventsPayloads } from "@/app/types/events.types"
 
 type Props = {
     projetsInfos: {
@@ -19,7 +20,7 @@ function ProjectInfoItem({ projetsInfos, projectId }: Props) {
         const handleProjectInfoShow = (
             event: Event
         ) => {
-            const customEvent = event as CustomEvent<{ projectId: string }>;
+            const customEvent = event as CustomEvent<CustomEventsPayloads["projectinfo:show"]>;
 
             if (customEvent.detail.projectId === projectId) {
                 setShowInfo(true);
@@ -27,13 +28,13 @@ function ProjectInfoItem({ projetsInfos, projectId }: Props) {
         };
 
         window.addEventListener(
-            "projectinfo:show",
+            CustomEventsMap["projectinfo:show"],
             handleProjectInfoShow
         );
 
         return () => {
             window.removeEventListener(
-                "projectinfo:show",
+                CustomEventsMap["projectinfo:show"],
                 handleProjectInfoShow
             );
         };

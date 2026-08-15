@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import styles from "./custom.cursor.module.scss";
+import { CustomEventsMap, CustomEventsPayloads } from "@/app/types/events.types";
 
 const size = 80;
 function CustomCursor() {
@@ -14,21 +15,20 @@ function CustomCursor() {
         const handleCursorUpdate = (
             event: Event
         ) => {
-            const customEvent = event as CustomEvent<{ show: boolean; pointer?: boolean }>;
-            console.log(customEvent.detail);
+            const customEvent = event as CustomEvent<CustomEventsPayloads["cursor:update"]>;
 
             setShow(customEvent.detail.show);
             setPointer(customEvent.detail.pointer ?? false);
         };
 
         window.addEventListener(
-            "cursor:update",
+            CustomEventsMap["cursor:update"],
             handleCursorUpdate
         );
 
         return () => {
             window.removeEventListener(
-                "cursor:update",
+                CustomEventsMap["cursor:update"],
                 handleCursorUpdate
             );
         };

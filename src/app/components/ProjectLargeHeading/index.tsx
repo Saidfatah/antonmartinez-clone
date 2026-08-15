@@ -3,6 +3,7 @@
 import { useContext, useEffect, useRef } from "react";
 import styles from "./project.large.heading.module.scss";
 import { gsap } from "gsap";
+import { CustomEventsMap, CustomEventsPayloads } from "@/app/types/events.types";
 
 type ProjectLargeHeadingProps = {
     label: string;
@@ -11,15 +12,15 @@ type ProjectLargeHeadingProps = {
 };
 
 function easeOutQuint(x: number): number {
-return 1 - Math.pow(1 - x, 5);
+    return 1 - Math.pow(1 - x, 5);
 }
 
-function ProjectLargeHeading({ label,projectId, hasDecsenders = false }: ProjectLargeHeadingProps) {
+function ProjectLargeHeading({ label, projectId, hasDecsenders = false }: ProjectLargeHeadingProps) {
     const textSpanRef = useRef<HTMLSpanElement>(null);
 
     const handleEnter = () => {
         window.dispatchEvent(
-            new CustomEvent("cursor:update", {
+            new CustomEvent<CustomEventsPayloads["cursor:update"]>(CustomEventsMap["cursor:update"], {
                 detail: {
                     show: true,
                     pointer: true,
@@ -27,7 +28,7 @@ function ProjectLargeHeading({ label,projectId, hasDecsenders = false }: Project
             })
         );
         window.dispatchEvent(
-            new CustomEvent("projectinfo:show", {
+            new CustomEvent<CustomEventsPayloads["projectinfo:show"]>(CustomEventsMap["projectinfo:show"], {
                 detail: {
                     projectId: projectId,
                 },
@@ -37,7 +38,7 @@ function ProjectLargeHeading({ label,projectId, hasDecsenders = false }: Project
 
     const handleLeave = () => {
         window.dispatchEvent(
-            new CustomEvent("cursor:update", {
+            new CustomEvent<CustomEventsPayloads["cursor:update"]>(CustomEventsMap["cursor:update"], {
                 detail: {
                     show: false,
                     pointer: false,
@@ -45,7 +46,7 @@ function ProjectLargeHeading({ label,projectId, hasDecsenders = false }: Project
             })
         );
         window.dispatchEvent(
-            new CustomEvent("projectinfo:hide", {
+            new CustomEvent<CustomEventsPayloads["projectinfo:hide"]>(CustomEventsMap["projectinfo:hide"], {
                 detail: {
                     projectId: projectId,
                 },
