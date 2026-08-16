@@ -34,6 +34,7 @@ html,
 body {
   margin: 0;
   padding: 0;
+  font-family: Lausanne, sans-serif;
 }
 
 html {
@@ -81,13 +82,19 @@ main {
   color: var(--text-color-primary);
 }
 
+main a {
+  pointer-events: all;
+}
 
 #scroll-pointer {
-  position: fixed;
-  inset: 0;
-
-  pointer-events: none;
-  z-index: 100;
+    height: 100%;
+    left: 0;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    transform: translateZ(0);
+    width: 100%;
+    z-index: 999;
 }
 
 .container {
@@ -135,4 +142,20 @@ main {
 
 .row.flex-end {
   justify-content: flex-end;
+}
+
+
+
+a {
+    color: inherit;
+    -webkit-text-decoration: none;
+    text-decoration: none;
+    font-weight: 300;
+}
+
+a, a:focus, button, button:focus {
+    outline: none !important;
+}
+a {
+    background: 0 0;
 }
