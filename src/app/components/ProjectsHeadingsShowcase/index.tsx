@@ -3,7 +3,7 @@ import ProjectLargeHeading from "../ProjectLargeHeading";
 import styles from "./projects.headings.showcase.module.scss";
 
 function ProjectsHeadingsShowcase() {
-    return (<div className={styles.root}>
+    return (<div id="projects-headings-showcase" className={styles.root}>
         {projects.map((project) => (
             <ProjectLargeHeading
                 key={project.id}

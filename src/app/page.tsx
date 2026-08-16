@@ -57,12 +57,29 @@ const Layout = ({ children }: { children: (layoutReady: boolean) => React.ReactN
   );
 };
 
+
+
 export default function Home() {
   const scrollAbleContainer = useRef<HTMLDivElement>(null);
   const scrollPointerRef = useRef<HTMLDivElement>(null);
+  const projectsInfoContainerRef = useRef<{ updateTransofmrPosition: (transform: string) => void }>(null);
 
   useVirtualScroll(scrollAbleContainer, {
-    scrollPointerRef, onScrollStart: () => {
+    scrollPointerRef,
+    onScrollUpdate: (scrollY: number, maxScroll: number) => {
+      if (projectsInfoContainerRef.current && scrollAbleContainer.current) {
+        // const projectsHeadings = document.getElementById("projects-headings-showcase");
+        const projectsHeadingsPadding = 210;
+
+        const footerHeight = projectsHeadingsPadding;
+        const scrollPercentage = scrollY / maxScroll;
+
+        const offset = scrollPercentage * footerHeight * -1;
+
+        projectsInfoContainerRef.current.updateTransofmrPosition(`translateY(${offset}px)`);
+      }
+    },
+    onScrollStart: () => {
       window.dispatchEvent(
         new CustomEvent<CustomEventsPayloads["projectinfo:hide"]>(CustomEventsMap["projectinfo:hide"], {
           detail: {
@@ -99,7 +116,7 @@ export default function Home() {
               <ProjectsHeadingsShowcase />
             </div>
           </div>
-          <ProjectsInfo />
+          <ProjectsInfo ref={projectsInfoContainerRef} />
         </main>
       )}
     </Layout>
