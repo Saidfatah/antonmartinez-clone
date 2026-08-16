@@ -9,8 +9,11 @@ type UseVirtualScrollOptions = {
   onScrollStart?: () => void;
 
   // Called when scrolling completely settles.
-  onScrollEnd?: () => void;
-
+  onScrollEnd?: (currentScrollY: number, maxScroll: number) => void;
+  
+  // Called when scrolling updates.
+  onScrollUpdate?: (currentScrollY: number, maxScroll: number) => void;
+  
   // Optional element that should receive pointer-events changes.
   scrollPointerRef?: RefObject<HTMLElement | null>;
 
@@ -31,10 +34,11 @@ export function useVirtualScroll(
   {
     enabled = true,
     onScrollStart,
+    onScrollUpdate,
     onScrollEnd,
     scrollPointerRef,
-    multiplier = 0.75,
-    ease = 0.095,
+    multiplier = 0.3,
+    ease = 0.3,
   }: UseVirtualScrollOptions = {}
 ) {
 
@@ -77,9 +81,7 @@ export function useVirtualScroll(
 
       if (scrolling) {
         onScrollStart?.();
-      } else {
-        onScrollEnd?.();
-      }
+      } 
     };
 
     const render = () => {
@@ -93,12 +95,16 @@ export function useVirtualScroll(
 
       container.style.transform = `translate3d(0, ${data.current}px, 0)`;
 
+      // Call update callback with current scroll position
+      onScrollUpdate?.(Math.abs(data.current), maxScroll.current);
+
       const settled =
         Math.abs(data.target - data.current) < 0.1;
 
       if (settled) {
         data.current = data.target;
 
+        onScrollEnd?.(Math.abs(data.current), maxScroll.current);
         setScrollingState(false);
         raf.current = null;
 
