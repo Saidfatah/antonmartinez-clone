@@ -1,0 +1,140 @@
+.root{
+    left: 0;
+    padding-top: 24px;
+    pointer-events: none;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9999998;
+    
+    >div{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    :hover {
+        outline: none;
+        &::after {
+            transform: scaleX(1);
+            transform-origin: 0% 0;
+        }
+    }
+}
+
+.menuItems {
+    display: flex;
+    align-items: center;
+}
+
+.item { 
+    color: var(--text-color-primary);
+    display: inline-block;
+    letter-spacing: -.02em;
+    line-height: 1.2;
+    position: relative;
+
+    outline: none;
+
+    &:not(:last-child) {
+     margin-right: 20px;
+    }
+
+    &::after {
+        background: currentColor;
+        bottom: 1px;
+        left: 0;
+        content: "";
+        height: 1px;
+        position: absolute;
+        transform: scaleX(0);
+        transform-origin: 100% 0;
+        transition: transform .8s cubic-bezier(.49, .23, 0, 1);
+        width: 100%;
+    }
+
+    small{
+        display: inline-block;
+        font-size: .625em;
+        font-weight: inherit;
+        margin: 0;
+        transform: translateX(.3em) translateY(-38%);
+    }
+}
+
+.logo{
+    position: relative;
+
+    color: var(--text-color-primary);
+    display: inline-block;
+
+    font-size: 16px;
+    font-weight: 300;
+    // font-size: inherit;
+    // font-weight: inherit;
+
+    width: auto;
+
+    overflow: hidden;
+
+    h1{
+        margin: 0;
+
+        font-size: inherit;
+        font-weight: inherit;
+    }
+
+    span {
+        display: inline-block;
+        transition: transform 1s cubic-bezier(.19, 1, .22, 1);
+    }
+
+   small {
+        font-size: .625em;
+        font-weight: inherit;
+        margin-left: 2px;
+        display: inline-block;
+        transform: translateY(-4px);
+    }
+
+    .normal{
+        left: 0;
+        position: absolute;
+        top: 0;
+    }
+
+
+    // Two versions of the logo: normal and hover.
+    // The hidden "Anto" keeps both versions aligned and avoids hardcoding widths.
+    //
+    // Normal: Anto grama®
+    // Hover:  Anto n Martinez
+    .hover .left{
+        opacity: 0;
+    }
+
+    .normal .right{
+        transform: translateY(0%);
+    }
+    .hover .right{
+        transform: translateY(100%);
+    }
+
+    &:hover {
+        // on hover 
+        // the normal right should be moved up , -100%
+        .normal .right{
+            transform: translateY(-100%);
+        }
+
+        // the hover right shoudl be moved up from bottom 100%
+        .hover .right{
+            transform: translateY(0%);
+        }
+    }
+
+}
+
+
+
+ 

@@ -6,6 +6,7 @@ import ProjectsHeadingsShowcase from "./components/ProjectsHeadingsShowcase";
 import ProjectsInfo from "./components/ProjectsInfo";
 import { useVirtualScroll } from "./hooks/useVirtualScroll";
 import { CustomEventsMap, CustomEventsPayloads } from "./types/events.types";
+import Navbar from "./components/Navbar";
 
 const Layout = ({ children }: { children: (layoutReady: boolean) => React.ReactNode }) => {
   const rootDiv = useRef<HTMLDivElement>(null);
@@ -103,20 +104,28 @@ export default function Home() {
       {(layoutReady: boolean) => (
         <main id="main">
           <CustomCursor />
+
+          <Navbar />
+
           <div
             ref={scrollPointerRef}
             id="scroll-pointer"
           />
 
-          <div
-            ref={scrollAbleContainer}
-            className={`container ${layoutReady ? "row" : ""} flex-end`}
-          >
-            <div className="column-8">
-              <ProjectsHeadingsShowcase />
+          <div>
+            <div className="page">
+              <div
+                ref={scrollAbleContainer}
+                className={`container ${layoutReady ? "row" : ""} flex-end`}
+              >
+                <div className="column-8">
+                  <ProjectsHeadingsShowcase />
+                </div>
+              </div>
+              <ProjectsInfo ref={projectsInfoContainerRef} />
             </div>
           </div>
-          <ProjectsInfo ref={projectsInfoContainerRef} />
+
         </main>
       )}
     </Layout>
