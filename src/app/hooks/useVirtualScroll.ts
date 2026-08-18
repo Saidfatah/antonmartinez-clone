@@ -37,8 +37,8 @@ export function useVirtualScroll(
     onScrollUpdate,
     onScrollEnd,
     scrollPointerRef,
-    multiplier = 0.3,
-    ease = 0.3,
+    multiplier = 0.7,
+    ease = 0.1,
   }: UseVirtualScrollOptions = {}
 ) {
 
