@@ -1,7 +1,7 @@
 "use client";
 
 import { useLayoutEffect, useRef } from "react";
-import Navbar from "../Navbar";
+import Navbar, { NavbarRef } from "../Navbar";
 import CustomCursor from "../CustomCursor";
 import { useLayoutStore } from "@/app/store/layout.store";
 import "@/app/globals.css";
@@ -12,9 +12,9 @@ type BaseLayoutProps = {
 
 export default function BaseLayout({ children }: BaseLayoutProps) {
     const rootDiv = useRef<HTMLDivElement>(null);
-    const setLayoutReady = useLayoutStore(
-        (state) => state.setLayoutReady
-    );
+    const navbarRef = useRef<NavbarRef>(null)
+
+    const { setLayoutReady, layoutReady, setRevealWorksPageElements } = useLayoutStore();
 
     useLayoutEffect(() => {
         if (!rootDiv.current) return;
@@ -43,15 +43,21 @@ export default function BaseLayout({ children }: BaseLayoutProps) {
             `${(rect.width + margin) / 12}px`
         );
 
-        setLayoutReady(true);
-    }, [setLayoutReady]);
+        setTimeout(() => {
+            setLayoutReady(true);
+            setRevealWorksPageElements(true);
+            navbarRef.current?.revealLinks();
+        }, 2000);
+    }, [setLayoutReady, setRevealWorksPageElements]);
 
     return (
 
         <div ref={rootDiv} className="page">
+            {!layoutReady && <div className="loaderOverlay" />}
+
             <main id="main">
                 <CustomCursor />
-                <Navbar />
+                <Navbar ref={navbarRef} />
 
                 {children}
             </main>

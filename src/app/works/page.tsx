@@ -1,17 +1,19 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useVirtualScroll } from "../hooks/useVirtualScroll";
 import { CustomEventsMap, CustomEventsPayloads } from "../types/events.types";
-import ProjectsHeadingsShowcase from "../components/ProjectsHeadingsShowcase";
+import ProjectsHeadingsShowcase, { ProjectsHeadingsShowcaseRef } from "../components/ProjectsHeadingsShowcase";
 import ProjectsInfo from "../components/ProjectsInfo";
 import { useLayoutStore } from "../store/layout.store";
 
 
 
 export default function Pages() {
-    const { layoutReady } = useLayoutStore();
-    
+    const { layoutReady, revealWorksPageElements } = useLayoutStore();
+
+    const headingsShowcaseRef = useRef<ProjectsHeadingsShowcaseRef>(null);
+
     const scrollAbleContainer = useRef<HTMLDivElement>(null);
     const scrollPointerRef = useRef<HTMLDivElement>(null);
     const projectsInfoContainerRef = useRef<{ updateTransofmrPosition: (transform: string) => void }>(null);
@@ -50,6 +52,12 @@ export default function Pages() {
         }
     });
 
+    useEffect(() => {
+        if (revealWorksPageElements && headingsShowcaseRef.current) {
+            headingsShowcaseRef.current.revealTitles();
+        }
+    }, [revealWorksPageElements]);
+
     return (
         <>
             <div
@@ -64,7 +72,7 @@ export default function Pages() {
                         className={`container ${layoutReady ? "row" : ""} flex-end`}
                     >
                         <div className="column-8">
-                            <ProjectsHeadingsShowcase />
+                            <ProjectsHeadingsShowcase ref={headingsShowcaseRef} />
                         </div>
                     </div>
                     <ProjectsInfo ref={projectsInfoContainerRef} />
