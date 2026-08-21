@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 import { works } from "@/app/projects-data";
 import styles from "./projects.headings.showcase.module.scss";
-import { worksAnimationsConfig } from "@/app/animations/work.animation.config";
+import { worksAnimationsConfig, worksPageAnimationsIntialStates } from "@/app/animations/work.animation.config";
 import {
     CustomEventsMap,
     CustomEventsPayloads,
@@ -131,14 +131,14 @@ function ProjectsHeadingsShowcase({ ref }: Props) {
                 worksAnimationsConfig.titleRevealAnimation;
 
 
-            headingRefs.current.forEach((element,index) => {
+            headingRefs.current.forEach((element, index) => {
                 if (!element) return;
 
                 gsap.to(
                     element,
                     {
                         ...animation,
-                        delay: 0.02 *index,
+                        delay: 0.02 * index,
                     }
                 );
             });
@@ -166,10 +166,7 @@ function ProjectsHeadingsShowcase({ ref }: Props) {
                         onMouseLeave={() => handleLeave(work.id)}
                         style={
                             {
-                                translate: "none",
-                                rotate: "none",
-                                scale: "none",
-                                transform: "translate(0px, 110%)",
+                                ...worksPageAnimationsIntialStates.title,
                                 "--hide-duration": `${worksAnimationsConfig.hideDuration}s`,
                             } as React.CSSProperties
                         }
