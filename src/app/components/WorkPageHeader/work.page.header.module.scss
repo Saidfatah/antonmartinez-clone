@@ -1,0 +1,29 @@
+.root{
+    padding-top: max(47vh, 204px);
+    width: 100%;
+    
+    
+
+}
+
+.headerTop {
+    align-items: flex-end;
+    position: relative;
+}
+
+
+.projectTitle{
+    position: relative;
+    width: 100% ;
+    will-change: transform;
+}
+
+.headerInfoItems {
+    display: flex;
+    flex-wrap: wrap;
+
+     > :first-child {
+        margin-right: 72px;
+    }
+}
+
