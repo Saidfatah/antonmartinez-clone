@@ -10,7 +10,7 @@ import { useLayoutStore } from "../store/layout.store";
 
 
 export default function Pages() {
-    const { layoutReady, revealWorksPageElements } = useLayoutStore();
+    const { layoutReady, pageRevealAnimationEnabled } = useLayoutStore();
 
     const headingsShowcaseRef = useRef<ProjectsHeadingsShowcaseRef>(null);
 
@@ -53,10 +53,10 @@ export default function Pages() {
     });
 
     useEffect(() => {
-        if (revealWorksPageElements && headingsShowcaseRef.current) {
+        if (pageRevealAnimationEnabled && headingsShowcaseRef.current) {
             headingsShowcaseRef.current.revealTitles();
         }
-    }, [revealWorksPageElements]);
+    }, [pageRevealAnimationEnabled]);
 
     return (
         <>
