@@ -1,7 +1,17 @@
+"use client";
+
+import Link from "next/link";
 import { useImperativeHandle } from "react";
+import { usePathname } from "next/navigation";
+import { gsap } from "gsap";
+
 import styles from "./navbar.module.scss";
-import { gsap } from "gsap"
-import { navbarAnimationCofig } from "@/app/animations/work.animation.config";
+
+import {
+    navbarAnimationCofig,
+    navBarAnimationsIntialStates,
+    navbarDelaysMap,
+} from "@/app/animations/work.animation.config";
 
 const menuItems = [
     { href: "/", label: "About", count: null },
@@ -9,76 +19,79 @@ const menuItems = [
     { href: "/almost", label: "Almost", count: 15 },
 ];
 
-
 export type NavbarRef = {
     revealLinks: () => void;
-}
+};
 
 type Props = {
-    ref: React.Ref<NavbarRef>
-}
+    onNavigate?: (href: string) => void;
+    ref: React.Ref<NavbarRef>;
+};
 
-function Navbar({ ref }: Props) {
+function Navbar({ ref, onNavigate }: Props) {
+    const pathname = usePathname();
 
+    const isWorksPage = pathname === "/works";
 
     useImperativeHandle(ref, () => ({
         revealLinks: () => {
-            gsap.to(".gsap-item", navbarAnimationCofig.revealLinks);
-        }
-    }), [])
+            gsap.to(".gsap-item", {
+                ...navbarAnimationCofig.revealLinks,
+                delay: navbarDelaysMap[
+                    isWorksPage ? "works" : "other"
+                ],
+            });
+        },
+    }), [isWorksPage]);
 
-    return (<div className={styles.root}>
-        <div className="row">
-            <div className="column-8">
-                <div className={styles.menuItems}>
-                    {menuItems.map((item) => (
-                        <a
-                            href={item.href}
-                            key={item.href}
-                            className={[styles.item, "gsap-item"].join(' ')}
-                            style={{
-                                translate: "none",
-                                rotate: "none",
-                                scale: "none",
-                                transform: "translate(0px, -200%)",
-                                opacity: 0
-                            }}
-                        >
-                            <span>{item.label} {item.count && <small>{item.count}</small>} </span>
-                        </a>
-                    ))}
+    return (
+        <div className={styles.root}>
+            <div className="row">
+                <div className="column-8">
+                    <div className={styles.menuItems}>
+                        {menuItems.map((item) => (
+                            <a
+                                onClick={(event) => {
+                                    event.preventDefault();
+                                    onNavigate?.(item.href);
+                                }}
+                                key={item.href}
+                                className={[styles.item, "gsap-item"].join(" ")}
+                                style={navBarAnimationsIntialStates.links}
+                            >
+                                <span>
+                                    {item.label}{" "}
+                                    {item.count && <small>{item.count}</small>}
+                                </span>
+                            </a>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="column-4">
+                    <Link
+                        href="/"
+                        className={[styles.logo, "gsap-item"].join(" ")}
+                        style={navBarAnimationsIntialStates.links}
+                    >
+                        <h1 className={styles.normal}>
+                            Anto
+                            <span className={styles.right}>
+                                grama<small>®</small>
+                            </span>
+                        </h1>
+
+                        <h1 className={styles.hover}>
+                            <span className={styles.left}>Anto</span>
+                            <span className={styles.right}>
+                                n Martinez
+                            </span>
+                        </h1>
+                    </Link>
                 </div>
             </div>
-
-            {/* // logo */}
-            <div className="column-4">
-                <a
-                    href="/"
-                    className={[styles.logo, "gsap-item"].join(" ")}
-                    style={{
-                        translate: "none",
-                        rotate: "none",
-                        scale: "none",
-                        transform: "translate(0px, -200%)",
-                        opacity: 0
-                    }}
-
-                >
-                    <h1 className={styles.normal}>
-                        Anto
-                        <span className={styles.right}>
-                            grama<small>®</small>
-                        </span>
-                    </h1>
-
-                    <h1 className={styles.hover}>
-                        <span className={styles.left}>Anto</span>
-                        <span className={styles.right}>n Martinez</span>
-                    </h1>
-                </a>
-            </div>
         </div>
-    </div>);
+    );
 }
 
 export default Navbar;
