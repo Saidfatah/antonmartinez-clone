@@ -1,0 +1,18 @@
+.root{
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.infoItem{
+    color: var(--text-color-secondary);
+    
+    p{
+        margin:0 !important;
+    }
+}
+
+.infoItemTitle{
+    margin:0 !important;
+    color: var(--text-color-primary);
+    font-weight: 400;
+}
