@@ -1,7 +1,7 @@
 
 import ProjectInfoItem from "./ProjectInfoItem"
 import styles from "./projects.info.module.scss"
-import projects from "../../projects-data"
+import {works} from "../../projects-data"
 import { forwardRef, useImperativeHandle, useRef } from "react";
  
 type ProjectsInfoRef = {
@@ -20,8 +20,8 @@ const ProjectsInfo = forwardRef<ProjectsInfoRef, {}>((_, ref) => {
     }));
     
     return (<div ref={rootRef} className={styles.root}>
-        {projects.map((project) => (
-            <ProjectInfoItem key={project.id} projetsInfos={project} projectId={project.id} />
+        {works.map((work) => (
+            <ProjectInfoItem key={work.id} projetsInfos={work} projectId={work.id} />
         ))}
     </div>);
 })
